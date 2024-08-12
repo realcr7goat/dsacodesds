@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 
 struct node {
     int data;
@@ -10,22 +10,26 @@ struct node *front = NULL;
 struct node *rear = NULL;
 
 void insert();
-void delete ();
+void delete();
 void display();
 
-int main() {
-    int choice;
-    while (1) {
+void main() {
+    int choice = 0;
+    while(choice != 4) {
         printf("\nMain Menu\n");
-        printf("\n1.insert an element\n2.Delete an element\n3.Display the queue\n4.Exit\n");
-        printf("\nEnter your choice ?");
+        printf("1. Insert an element\n");
+        printf("2. Delete an element\n");
+        printf("3. Display the queue\n");
+        printf("4. Exit\n");
+        printf("\nEnter your choice: ");
         scanf("%d", &choice);
-        switch (choice) {
+        
+        switch(choice) {
             case 1:
                 insert();
                 break;
             case 2:
-                delete ();
+                delete();
                 break;
             case 3:
                 display();
@@ -33,56 +37,60 @@ int main() {
             case 4:
                 exit(0);
             default:
-                printf("\nEnter valid choice??\n");
+                printf("\nEnter a valid choice\n");
         }
     }
-    return 0;
 }
 
 void insert() {
-    struct node *ptr;
+    struct node *ptr = (struct node*)malloc(sizeof(struct node));
     int item;
-    ptr = (struct node *) malloc(sizeof(struct node));
-    if (ptr == NULL) {
+
+    if(ptr == NULL) {
         printf("\nOVERFLOW\n");
         return;
     } else {
-        printf("\nEnter value?\n");
+        printf("\nEnter value: ");
         scanf("%d", &item);
         ptr->data = item;
         ptr->next = NULL;
-        if (front == NULL) {
+
+        if(front == NULL) {
             front = ptr;
             rear = ptr;
         } else {
             rear->next = ptr;
             rear = ptr;
         }
+        printf("\nValue inserted\n");
     }
 }
 
-void delete () {
+void delete() {
     struct node *ptr;
-    if (front == NULL) {
+
+    if(front == NULL) {
         printf("\nUNDERFLOW\n");
         return;
     } else {
         ptr = front;
         front = front->next;
+        printf("\nDeleted element: %d\n", ptr->data);
         free(ptr);
     }
 }
 
 void display() {
-    struct node *ptr;
-    ptr = front;
-    if (front == NULL) {
+    struct node *ptr = front;
+
+    if(front == NULL) {
         printf("\nEmpty queue\n");
     } else {
-        printf("\nprinting values .....\n");
-        while (ptr != NULL) {
-            printf("\n%d\n", ptr->data);
+        printf("\nPrinting values...\n");
+        while(ptr != NULL) {
+            printf("%d ", ptr->data);
             ptr = ptr->next;
         }
+        printf("\n");
     }
 }
